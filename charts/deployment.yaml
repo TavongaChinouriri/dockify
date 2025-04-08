@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockify
+  namespace: dockify
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dockify
+  template:
+    metadata:
+      labels:
+        app: dockify
+    spec:
+      containers:
+      - name: dockify
+        image: kaributechworkflows/dockify:${IMAGE_TAG}
+        ports:
+        - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: dockify-secrets
